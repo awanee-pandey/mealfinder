@@ -12,25 +12,23 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div className="container">
+    <div class="container">
         <h1>Meal Finder</h1>
-            <div class="container">
-                <div class="contents">
-                    <form action="" className="flex" id="submit">
-                        <input type="text" id="search" placeholders="search for meals or keywords"/>
-                        <button className="search-btn">
-                        <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                    <button class="random-btn" id="random">
-                        <i class="fas fa-random"></i>
+            <div class="contents">
+                <form action="" class="flex" id="submit">
+                    <input type="text" id="search" placeholders="search for meals or keywords"/>
+                    <button class="search-btn">
+                    <i class="fas fa-search"></i>
                     </button>
-                </div>
+                </form>
+                <button class="random-btn" id="random">
+                    <i class="fas fa-random"></i>
+                </button>
             </div>
+        
+            <div id="result-heading"></div>
+            <div id="meals" class="meals"></div>
+            <div id="single-meal"></div>   
     </div>
-    <div id="result-heading"></div>
-    <div id="meals" class="meals"></div>
-    <div id="single-meal"></div>
-
 </body>
 </html>

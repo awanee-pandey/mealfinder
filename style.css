@@ -1,3 +1,45 @@
 *{
-    
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+body{
+    height:100vh;
+    max-width: 100vw;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightcoral;
+}
+
+.container{
+    width:70%;
+    height: 100%;
+    border:2px solid green;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container h1{
+    margin: 50px 0 20px 0;
+}
+
+.contents{
+    width:35%;
+    display: flex;
+    justify-content: space-between;
+    border:3px solid red;
+}
+
+.flex{
+    width: 100%;
+    display:flex;
+}
+
+.flex input{
+    outline: none;
+    width: 100%;
+    height:40px;
 }
