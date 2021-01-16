@@ -9,9 +9,14 @@
 body{
     display:flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     background-color: lightcoral;
     font-family: 'Roboto',sans-serif;
+}
+
+ul,li{
+    list-style: none;
 }
 
 .container{
@@ -20,6 +25,7 @@ body{
     display:flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .container h1{
@@ -111,4 +117,91 @@ body{
 
 .meal:hover .meal-info{
     opacity:1;
+}
+
+.single-meal{
+    margin: 30px auto;
+    width:70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.single-meal img{
+    width:280px;
+    height:280px;
+    border:4px solid #fff;
+    border-radius: 2px;
+}
+
+.single-meal p{
+    letter-spacing: 0.5px;
+    line-height: 1.5;
+}
+
+.single-meal-info{
+    margin:20px;
+    padding:10px;
+    width:70%;
+    text-align: center;
+    border : 2px rgb(226, 219, 219) dashed;
+}
+
+
+.single-meal ul{
+   text-align: center;
+}
+
+.single-meal ul li{
+    border:1px solid #ededed;
+    border-radius: 5px;
+    display: inline-block;
+    padding:5px;
+    margin: 0 5px 5px 0;
+    background-color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.main h2{
+    margin:20px 0;
+}
+
+
+@media(max-width:800px){
+    .meals{
+        grid-template-columns: repeat(3,1fr);
+    }
+}
+
+@media(max-width:700px){
+    .meals{
+        grid-template-columns: repeat(2,1fr);
+    }
+    .meal{
+        height:200px;
+        width:200px;
+    }
+}
+
+@media(max-width:500px){
+    input[type='text']{
+        width:100%;
+    }
+    .meals{
+        grid-template-columns: 1fr;
+    }
+    .meal{
+        height:300px;
+        width:200px;
+    }
 }

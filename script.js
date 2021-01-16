@@ -56,14 +56,16 @@ function getMealById(mealID){
 /* Add meal to DOM */
 function addMealToDOM(meal){
     const ingredients = [];
-    for(let i =0 ;i<20;i++){
-        if(meal[`strIngredient${i}`]){
+    for(let i =1 ;i<=20;i++){
+        if (meal[`strIngredient${i}`]) {
             ingredients.push(`${meal[`strIngredient${i}`]} - ${meal[`strMeasure${i}`]}`)
+           
         }else{
             break;
         }
     }
 
+ 
     singleMeal.innerHTML=`
         <div class = "single-meal">
             <h1>${meal.strMeal}</h1>
@@ -79,12 +81,26 @@ function addMealToDOM(meal){
                     ${ingredients.map(ing => `<li>${ing}</li>`).join('')}
                 </ul>
             </div>
-        
-    `
+        </div>
+     `
+}
+
+/* Fetch random meal */
+function getRandomMeal(){
+    meals.innerHTML = '';
+    result.innerHTML = '';
+    fetch(`https://www.themealdb.com/api/json/v1/1/random.php`)
+    .then(res=>res.json())
+    .then(data=>{
+        const meal =data.meals[0];
+            addMealToDOM(meal);
+    })
+
 }
 
  /* Event Listener */
  searchbtn.addEventListener('click',searchMeal);
+ randombtn.addEventListener('click',getRandomMeal);
 
  /* Individual data showing part  */
  meals.addEventListener('click',e=>{
