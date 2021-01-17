@@ -6,6 +6,28 @@ const searchInput = document.getElementById('search'),
  singleMeal = document.getElementById('single-meal');
  console.log(searchbtn);
 
+ window.onload = function(){
+        displayRandom();
+    }
+
+/*fetch random list of ingredients */
+function displayRandom(){
+    fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`)
+      .then(res => res.json())
+      .then(data=>{
+            console.log(data);
+             meals.innerHTML = data.categories.map(meal =>
+               `<div class ="meal">
+                   <img src='${meal.strCategoryThumb}' href='${meal.strCategoryThumb}' />
+                   <div class = "meal-info" data-mealID= "${meal.idMeal}">
+                       <h3>${meal.strCategory}</h3>
+                   </div>
+                </div>
+               `).join('');
+       })
+ }
+
+
  /* Function for searching meal and fetch from API */
  function searchMeal(e){
     e.preventDefault();
@@ -22,10 +44,7 @@ const searchInput = document.getElementById('search'),
         .then(data=>{
             console.log(data);
             result.innerHTML =`<h2>Search results for '${term}':</h2>`
-            if(data.meals === null){
-                result.innerHTML=`There are no such meal.Please Try something else`;
-                meals.innerHTML = '';
-            } else{
+            if(data.meals){
                 meals.innerHTML = data.meals.map(meal =>
                     `<div class ="meal">
                         <img src='${meal.strMealThumb}' href='${meal.strMeal}' />
@@ -35,6 +54,10 @@ const searchInput = document.getElementById('search'),
                      </div>
                     `).join('');
                 }
+            else{
+                result.innerHTML=`There are no such meal.Please Try something else`;
+        
+            }
         });
         //clear search text
         searchInput.value = '';
@@ -42,6 +65,28 @@ const searchInput = document.getElementById('search'),
         alert('Please enter a search term');
     }
  }
+
+ function getMealbyCategory(strCategory){
+    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${strCategory}`)
+    .then(res=>res.json())
+    .then(data=>{
+        if(data.meals){
+            meals.innerHTML = data.meals.map(meal =>
+                `<div class ="meal">
+                    <img src='${meal.strMealThumb}' href='${meal.strMeal}' />
+                    <div class = "meal-info" data-mealID= "${meal.idMeal}">
+                        <h3>${meal.strMeal}</h3>
+                    </div>
+                 </div>
+                `).join('');
+        }
+        else{
+            result.innerHTML=`There are no such meal.Please Try something else`;
+    
+        }
+    })
+ }
+
 
 /* Fetch meal by ID */
 function getMealById(mealID){
@@ -65,7 +110,6 @@ function addMealToDOM(meal){
         }
     }
 
- 
     singleMeal.innerHTML=`
         <div class = "single-meal">
             <h1>${meal.strMeal}</h1>
@@ -95,26 +139,29 @@ function getRandomMeal(){
         const meal =data.meals[0];
             addMealToDOM(meal);
     })
-
 }
 
  /* Event Listener */
- searchbtn.addEventListener('click',searchMeal);
- randombtn.addEventListener('click',getRandomMeal);
+    searchbtn.addEventListener('click',searchMeal);
+    randombtn.addEventListener('click',getRandomMeal);
 
  /* Individual data showing part  */
- meals.addEventListener('click',e=>{
+
+    meals.addEventListener('click',e=>{
+
      const mealInfo = e.path.find(item=>{
+        console.log(item);
          if(item.classList){
             return item.classList.contains('meal-info');
          } else{
-             return false;
+            return false;
          }
      });
      if(mealInfo){
          const mealID = mealInfo.getAttribute('data-mealid');
          getMealById(mealID);
      }
- })
+
+    })
 
 

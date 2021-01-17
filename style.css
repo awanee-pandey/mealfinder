@@ -11,8 +11,9 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: lightcoral;
+    background-color: rgb(57, 32, 97);
     font-family: 'Roboto',sans-serif;
+    color:#fff;
 }
 
 ul,li{
@@ -30,6 +31,7 @@ ul,li{
 
 .container h1{
     margin: 50px 0 20px 0;
+    
 }
 
 .contents{
@@ -85,8 +87,8 @@ ul,li{
 }
 
 .meal{
-    width:210px;
-    height:210px;
+    width:200px;
+    height:200px;
     cursor:pointer;
     color:#fff;
     position:relative;
@@ -162,6 +164,7 @@ ul,li{
     background-color: #fff;
     font-size: 13px;
     font-weight: 600;
+    color:#000;
 }
 
 .main{
