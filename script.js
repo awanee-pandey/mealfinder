@@ -24,11 +24,11 @@ function displayRandom(){
                    </div>
                 </div>
                `).join('');
-               console.log(meals);
                 const mealsForClick = document.querySelectorAll('.meal .meal-info');
                 mealsForClick.forEach(function (mealInfo) {
                 mealInfo.addEventListener('click', function () {
                 getMeal(mealInfo.dataset['mealid']);
+              
                 });
             });
        })
@@ -48,6 +48,14 @@ function getMeal(food){
                     </div>
                  </div>
                 `).join('');
+                const mealsForClick = document.querySelectorAll('.meal .meal-info');
+                mealsForClick.forEach(function (mealInfo) {
+                mealInfo.addEventListener('click', function () {
+                getMealById(mealInfo.dataset['mealid']);
+              
+                });
+            });
+               
             }
         else{
             result.innerHTML=`There are no such meal.Please Try something else`;
@@ -131,40 +139,6 @@ function getRandomMeal(){
     searchbtn.addEventListener('click',searchMeal);
     randombtn.addEventListener('click',getRandomMeal);
 
- /* Individual data showing part  */
-
-    meals.addEventListener('click',e=>{
-    const mealInfo = e.path.find(item=>{
-    if(item.classList){
-        return item.classList.contains('meal-info');
-     } else{
-         return false;
-         }
-    })
-
-     if(mealInfo){
-         const mealID = mealInfo.getAttribute('data-mealid');
-         getMealById(mealID);
-     }
-
-     })
-
-/* const mealsForClick = document.querySelectorAll('.meal .meal-info');
-                mealsForClick.forEach(function (mealInfo) {
-                mealInfo.addEventListener('click', function () {
-                getMeal(mealInfo.dataset['mealid']);
-                }); */
-
-
-   /* Individual data showing part  */
-//    meals.forEach(function(mealInfo){
-//        if(meals.classList.contains('meal-info')){
-//            mealInfo.addEventListener('click',function(){
-//                getMeal(mealInfo.dataset['mealid']);
-//            })
-//        }
-
-//    })
 
 
 
