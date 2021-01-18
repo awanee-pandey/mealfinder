@@ -19,13 +19,35 @@ function displayRandom(){
              meals.innerHTML = data.categories.map(meal =>
                `<div class ="meal">
                    <img src='${meal.strCategoryThumb}' href='${meal.strCategoryThumb}' />
-                   <div class = "meal-info" data-mealID= "${meal.idMeal}">
+                   <div class = "meal-info">
                        <h3>${meal.strCategory}</h3>
                    </div>
                 </div>
                `).join('');
        })
- }
+}
+
+function getMeal(food){
+    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${food}`)
+    .then(res=>res.json())
+    .then(data=>{
+        console.log(data);
+        result.innerHTML =`<h2>Search results for '${food}':</h2>`
+        if(data.meals){
+            meals.innerHTML = data.meals.map(meal =>
+                `<div class ="meal">
+                    <img src='${meal.strMealThumb}' href='${meal.strMeal}' />
+                    <div class = "meal-info" data-mealID= "${meal.idMeal}">
+                        <h3 class = "category">${meal.strMeal}</h3>
+                    </div>
+                 </div>
+                `).join('');
+            }
+        else{
+            result.innerHTML=`There are no such meal.Please Try something else`;
+        }
+    });
+}
 
 
  /* Function for searching meal and fetch from API */
@@ -39,54 +61,14 @@ function displayRandom(){
     
     /* Check for empty */
     if(term.trim()){
-        fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${term}`)
-        .then(res=>res.json())
-        .then(data=>{
-            console.log(data);
-            result.innerHTML =`<h2>Search results for '${term}':</h2>`
-            if(data.meals){
-                meals.innerHTML = data.meals.map(meal =>
-                    `<div class ="meal">
-                        <img src='${meal.strMealThumb}' href='${meal.strMeal}' />
-                        <div class = "meal-info" data-mealID= "${meal.idMeal}">
-                            <h3>${meal.strMeal}</h3>
-                        </div>
-                     </div>
-                    `).join('');
-                }
-            else{
-                result.innerHTML=`There are no such meal.Please Try something else`;
-        
-            }
-        });
+        getMeal(term)
         //clear search text
         searchInput.value = '';
-    }else{
+    }
+    else{
         alert('Please enter a search term');
     }
- }
-
- function getMealbyCategory(strCategory){
-    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${strCategory}`)
-    .then(res=>res.json())
-    .then(data=>{
-        if(data.meals){
-            meals.innerHTML = data.meals.map(meal =>
-                `<div class ="meal">
-                    <img src='${meal.strMealThumb}' href='${meal.strMeal}' />
-                    <div class = "meal-info" data-mealID= "${meal.idMeal}">
-                        <h3>${meal.strMeal}</h3>
-                    </div>
-                 </div>
-                `).join('');
-        }
-        else{
-            result.innerHTML=`There are no such meal.Please Try something else`;
-    
-        }
-    })
- }
-
+}
 
 /* Fetch meal by ID */
 function getMealById(mealID){
@@ -104,13 +86,11 @@ function addMealToDOM(meal){
     for(let i =1 ;i<=20;i++){
         if (meal[`strIngredient${i}`]) {
             ingredients.push(`${meal[`strIngredient${i}`]} - ${meal[`strMeasure${i}`]}`)
-           
         }else{
             break;
         }
     }
-
-    singleMeal.innerHTML=`
+     singleMeal.innerHTML=`
         <div class = "single-meal">
             <h1>${meal.strMeal}</h1>
             <img src='${meal.strMealThumb}' href='${meal.strMeal}' />
@@ -148,20 +128,18 @@ function getRandomMeal(){
  /* Individual data showing part  */
 
     meals.addEventListener('click',e=>{
-
      const mealInfo = e.path.find(item=>{
-        console.log(item);
          if(item.classList){
             return item.classList.contains('meal-info');
          } else{
             return false;
          }
-     });
+     })
+
      if(mealInfo){
          const mealID = mealInfo.getAttribute('data-mealid');
          getMealById(mealID);
      }
 
     })
-
 
