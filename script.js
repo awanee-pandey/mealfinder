@@ -19,11 +19,18 @@ function displayRandom(){
              meals.innerHTML = data.categories.map(meal =>
                `<div class ="meal">
                    <img src='${meal.strCategoryThumb}' href='${meal.strCategoryThumb}' />
-                   <div class = "meal-info">
+                   <div class = "meal-info" data-mealID = "${meal.strCategory}">
                        <h3>${meal.strCategory}</h3>
                    </div>
                 </div>
                `).join('');
+               console.log(meals);
+                const mealsForClick = document.querySelectorAll('.meal .meal-info');
+                mealsForClick.forEach(function (mealInfo) {
+                mealInfo.addEventListener('click', function () {
+                getMeal(mealInfo.dataset['mealid']);
+                });
+            });
        })
 }
 
@@ -31,7 +38,6 @@ function getMeal(food){
     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${food}`)
     .then(res=>res.json())
     .then(data=>{
-        console.log(data);
         result.innerHTML =`<h2>Search results for '${food}':</h2>`
         if(data.meals){
             meals.innerHTML = data.meals.map(meal =>
@@ -128,18 +134,38 @@ function getRandomMeal(){
  /* Individual data showing part  */
 
     meals.addEventListener('click',e=>{
-     const mealInfo = e.path.find(item=>{
-         if(item.classList){
-            return item.classList.contains('meal-info');
-         } else{
-            return false;
+    const mealInfo = e.path.find(item=>{
+    if(item.classList){
+        return item.classList.contains('meal-info');
+     } else{
+         return false;
          }
-     })
+    })
 
      if(mealInfo){
          const mealID = mealInfo.getAttribute('data-mealid');
          getMealById(mealID);
      }
 
-    })
+     })
+
+/* const mealsForClick = document.querySelectorAll('.meal .meal-info');
+                mealsForClick.forEach(function (mealInfo) {
+                mealInfo.addEventListener('click', function () {
+                getMeal(mealInfo.dataset['mealid']);
+                }); */
+
+
+   /* Individual data showing part  */
+//    meals.forEach(function(mealInfo){
+//        if(meals.classList.contains('meal-info')){
+//            mealInfo.addEventListener('click',function(){
+//                getMeal(mealInfo.dataset['mealid']);
+//            })
+//        }
+
+//    })
+
+
+
 
