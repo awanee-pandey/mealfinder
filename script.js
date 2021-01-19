@@ -9,7 +9,7 @@ const searchInput = document.getElementById('search'),
  window.onload = function(){
         displayRandom();
     }
-
+  
 /*fetch random list of ingredients */
 function displayRandom(){
     fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`)
@@ -25,14 +25,21 @@ function displayRandom(){
                 </div>
                `).join('');
                 const mealsForClick = document.querySelectorAll('.meal .meal-info');
-                mealsForClick.forEach(function (mealInfo) {
-                mealInfo.addEventListener('click', function () {
-                getMeal(mealInfo.dataset['mealid']);
-              
-                });
-            });
-       })
+                // mealsForClick.forEach(clickMeal);
+                clickMeal(mealsForClick,getMeal);
+                
+     })
 }
+
+function clickMeal(meals,displayItem){
+    meals.forEach(mealInfo => {
+        mealInfo.addEventListener('click', function () {
+            const mealData = mealInfo.dataset['mealid'];
+            displayItem(mealData);
+            
+        })
+    });
+} 
 
 function getMeal(food){
     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${food}`)
@@ -48,13 +55,8 @@ function getMeal(food){
                     </div>
                  </div>
                 `).join('');
-                const mealsForClick = document.querySelectorAll('.meal .meal-info');
-                mealsForClick.forEach(function (mealInfo) {
-                mealInfo.addEventListener('click', function () {
-                getMealById(mealInfo.dataset['mealid']);
-              
-                });
-            });
+                const detail = document.querySelectorAll('.meal .meal-info');
+                clickMeal(detail,getMealById);
                
             }
         else{
